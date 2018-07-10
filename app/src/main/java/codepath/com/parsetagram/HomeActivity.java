@@ -11,8 +11,13 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 import java.io.File;
 
@@ -76,11 +81,44 @@ public class HomeActivity extends AppCompatActivity {
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
                 // RESIZE BITMAP, see section below
                 // Load the taken image into a preview
+                // todo-- pass just the url instead and save bitmap to external storage
+//                Intent i = new Intent(HomeActivity.this, PostActivity.class);
+//                i.putExtra("BitmapImage", takenImage);
+//                startActivity(i);
                 ImageView ivPreview = (ImageView) findViewById(R.id.ivPreview);
                 ivPreview.setImageBitmap(takenImage);
+                EditText etCaption = (EditText) findViewById(R.id.etCaption);
+                etCaption.setVisibility(View.VISIBLE);
+                Button btnPost = (Button) findViewById(R.id.btnPost);
+                // RelativeLayout mRlayout = (RelativeLayout) findViewById(R.id.mRlayout);
+//                EditText caption = new EditText(this); // Pass it an Activity or Context
+//                caption.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)); // Pass two args; must be LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, or an integer pixel value.
+//                R.layout.activity_home.addView(caption);
             } else { // Result was a failure
                 Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public void onClick(View view) {
+        ParseUser.logOut();
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        Intent i = new Intent(HomeActivity.this, LoginActivity.class);
+        startActivity(i);
+    }
+
+    public void onPostClick(View view) {
+        // uploads photo just taken and "posts" to Instagram
+        File photoFile = getPhotoFileUri(photoFileName);
+        Post post = new Post("post");
+        post.setOwner(ParseUser.getCurrentUser());
+        ParseFile parseFile = new ParseFile(photoFile);
+        post.setMedia(parseFile);
+        post.saveInBackground();
+        // problem-- not getting the object id
+        Log.d("HomeActivity", "Post id: " + post.getObjectId());
+        Intent i = new Intent(HomeActivity.this, TimelineActivity.class);
+        i.putExtra("post_id", post.getObjectId());
+        startActivity(i);
     }
 }

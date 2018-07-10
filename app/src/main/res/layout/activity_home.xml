@@ -4,15 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="@android:color/white"
     tools:context=".HomeActivity">
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="HomeActivity"
-        tools:layout_editor_absoluteX="163dp"
-        tools:layout_editor_absoluteY="116dp" />
 
     <Button
         android:id="@+id/btnTakePhoto"
@@ -25,10 +18,54 @@
 
     <ImageView
         android:id="@+id/ivPreview"
-        android:layout_width="92dp"
-        android:layout_height="114dp"
+        android:layout_width="240dp"
+        android:layout_height="273dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="219dp"
+        android:layout_marginTop="67dp"
         app:srcCompat="@android:drawable/screen_background_light_transparent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="onClick"
+        android:text="Log Out" />
+
+    <EditText
+        android:id="@+id/etCaption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="114dp"
+        android:ems="10"
+        android:hint="Caption it!"
+        android:inputType="textPersonName"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/btnPost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="55dp"
+        android:onClick="onPostClick"
+        android:text="Post" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:fontFamily="@font/billabong"
+        android:text="Instagram"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="36sp" />
+
 </RelativeLayout>
