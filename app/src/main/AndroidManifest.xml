@@ -43,11 +43,13 @@
         </provider>
 
         <activity android:name=".PostActivity" />
-        <activity android:name=".TimelineActivity"></activity>
+        <activity android:name=".TimelineActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <activity android:name=".DetailsActivity"></activity>
     </application>
 
 </manifest>

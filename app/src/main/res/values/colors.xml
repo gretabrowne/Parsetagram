@@ -10,4 +10,5 @@
     <color name="cyan_500">#00BCD4</color>
     <color name="light_blue_500">#03A9F4</color>
     <color name="black">#000000</color>
+    <color name="light_grey">#fafafa</color>
 </resources>

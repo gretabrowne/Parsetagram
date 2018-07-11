@@ -40,4 +40,9 @@ public class Post extends ParseObject {
     public void setOwner(ParseUser user) {
         put("owner", user);
     }
+
+//    @Override
+//    public Date getCreatedAt() {
+//        return getDate("createdAt");
+//    }
 }
