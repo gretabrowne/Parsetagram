@@ -12,7 +12,7 @@
         android:layout_height="400dp" />
 
     <TextView
-        android:id="@+id/tvCaption"
+        android:id="@+id/tvCaption0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -24,6 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/tvCaption"
+        android:layout_below="@+id/tvCaption0"
         android:text="TextView" />
 </RelativeLayout>

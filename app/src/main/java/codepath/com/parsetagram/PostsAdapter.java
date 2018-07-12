@@ -27,6 +27,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView photo;
         public TextView caption;
+        public TextView username;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -36,7 +37,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             super(itemView);
 
             photo = (ImageView) itemView.findViewById(R.id.ivPost);
-            caption = (TextView) itemView.findViewById(R.id.tvCaption);
+            caption = (TextView) itemView.findViewById(R.id.tvCaption0);
+            username = (TextView) itemView.findViewById(R.id.tvUsername);
 
             itemView.setOnClickListener(this);
         }
@@ -46,7 +48,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             int position = getAdapterPosition();
             // ensure valid position
             if (position != RecyclerView.NO_POSITION) {
-                // get tweet at position
+                // get position
                 Post post = myPosts.get(position);
                 Intent intent = new Intent(context, DetailsActivity.class);
                 intent.putExtra("image_url", post.getMedia().getUrl());
@@ -84,6 +86,19 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
         Glide.with(context)
                 .load(imageUrl)
                 .into(imageView);
+
+        String postCaption = post.getBody();
+        TextView caption = viewHolder.caption;
+        caption.setText(postCaption);
+
+        TextView user = viewHolder.username;
+//        String username = null;
+//        try {
+//            // username = post.fetchIfNeeded().getParseUser("username");
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        user.setText(username);
     }
 
     @Override

@@ -14,7 +14,7 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         ImageView ivDetailPhoto = findViewById(R.id.ivDetailPhoto);
-        TextView caption = findViewById(R.id.tvCaption);
+        TextView caption = findViewById(R.id.tvCaption0);
         TextView tvTimestamp = findViewById(R.id.tvTimestamp);
         caption.setText(getIntent().getStringExtra("caption"));
         tvTimestamp.setText(getIntent().getStringExtra("timestamp"));
