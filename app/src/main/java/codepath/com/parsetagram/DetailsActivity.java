@@ -19,5 +19,8 @@ public class DetailsActivity extends AppCompatActivity {
         caption.setText(getIntent().getStringExtra("caption"));
         tvTimestamp.setText(getIntent().getStringExtra("timestamp"));
         Glide.with(this).load(getIntent().getStringExtra("image_url")).into(ivDetailPhoto);
+        TextView tvLikeCount = findViewById(R.id.tvLikeCount);
+        int numLikes = getIntent().getIntExtra("numLikes", 0);
+        tvLikeCount.setText(Integer.toString(numLikes) + " likes");
     }
 }

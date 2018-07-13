@@ -20,10 +20,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -43,6 +45,7 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
     Button btnPost;
     ImageButton launchCamera;
     EditText caption;
+    ProgressBar pb;
     private CameraFragment.OnItemSelectedListener listener;
 
     // Define the events that the fragment will use to communicate
@@ -79,6 +82,7 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
         launchCamera = view.findViewById(R.id.btnTakePhoto);
         launchCamera.setOnClickListener(this);
         caption = view.findViewById(R.id.etCaption);
+        pb = view.findViewById(R.id.pbLoading);
 
     }
 
@@ -92,22 +96,27 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
                 final Post post = new Post("post");
                 post.setOwner(ParseUser.getCurrentUser());
                 post.setBody(caption.getText().toString());
+                post.setUser(ParseUser.getCurrentUser());
                 ParseFile parseFile = new ParseFile(photoFile);
                 post.setMedia(parseFile);
-                try {
-                    post.save();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                Log.d("Fragment", "Post id: " + post.getObjectId());
+                pb.setVisibility(ProgressBar.VISIBLE);
+                post.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        Log.d("Fragment", "Post id: " + post.getObjectId());
                         listener.onHitPostButton();
+                        pb.setVisibility(ProgressBar.INVISIBLE);
                         Log.d("CameraFragment", "just called onHitPostButton in camera fragment");
                         // go to timeline fragment
+                    }
+                });
                 break;
             case R.id.btnTakePhoto:
                 onLaunchCamera(v);
                 break;
         }
+
+
 
 
     }

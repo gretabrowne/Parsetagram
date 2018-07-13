@@ -57,4 +57,10 @@
         android:scaleType="fitXY"
         app:srcCompat="@drawable/instagram_new_post_outline_24" />
 
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 </RelativeLayout>

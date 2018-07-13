@@ -4,13 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -20,6 +24,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
 
     private List<Post> myPosts;
     Context context;
+    public static boolean isLiked = false;
     public PostsAdapter (List<Post> posts) {
         this.myPosts = posts;
     }
@@ -28,6 +33,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
         public ImageView photo;
         public TextView caption;
         public TextView username;
+        public TextView dateCreated;
+        public ImageButton likeButton;
+        public ImageView propic;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -39,6 +47,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             photo = (ImageView) itemView.findViewById(R.id.ivPost);
             caption = (TextView) itemView.findViewById(R.id.tvCaption0);
             username = (TextView) itemView.findViewById(R.id.tvUsername);
+            dateCreated = (TextView) itemView.findViewById(R.id.tvDateCreated);
+            likeButton = (ImageButton) itemView.findViewById(R.id.ibLike);
+            propic = (ImageView) itemView.findViewById(R.id.ivProfile);
 
             itemView.setOnClickListener(this);
         }
@@ -58,6 +69,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
                 DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
                 String stringDate = df.format(post.getCreatedAt());
                 intent.putExtra("timestamp", stringDate);
+                intent.putExtra("numLikes", post.getNumLikes());
                 // show the activity
                 context.startActivity(intent);
             }
@@ -78,27 +90,80 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        Post post = myPosts.get(position);
+        final Post post = myPosts.get(position);
         ImageView imageView = viewHolder.photo;
+        ImageView profilePic = viewHolder.propic;
 
         String imageUrl = post.getMedia().getUrl();
+        String profilePic2 = ParseUser.getCurrentUser().getParseFile("profilepic").getUrl();
 
         Glide.with(context)
                 .load(imageUrl)
                 .into(imageView);
+        if (profilePic2 != null) {
+            Glide.with(context).load(profilePic2).into(profilePic);
+        }
 
-        String postCaption = post.getBody();
-        TextView caption = viewHolder.caption;
-        caption.setText(postCaption);
+
+        TextView timestamp = viewHolder.dateCreated;
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+        String stringDate = df.format(post.getCreatedAt());
+        timestamp.setText(stringDate);
+
 
         TextView user = viewHolder.username;
-//        String username = null;
-//        try {
-//            // username = post.fetchIfNeeded().getParseUser("username");
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        user.setText(username);
+        String username = null;
+        try {
+            username = post.getUser().fetchIfNeeded().getUsername();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        user.setText(username);
+        Log.d("username", username);
+
+        String postCaption = post.getBody();
+        Log.d("caption", postCaption);
+        TextView caption = viewHolder.caption;
+        caption.setText(String.format("%s %s", username, postCaption));
+
+        viewHolder.likeButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick (final View v) {
+                if (!isLiked) {
+                    v.setSelected(true);
+                    post.setNumLikes(post.getNumLikes() + 1);
+                    try {
+                        post.save();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    isLiked = true;
+                }
+
+                else {
+                    v.setSelected(false);
+                    post.setNumLikes(post.getNumLikes() - 1);
+                    try {
+                        post.save();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    isLiked = false;
+                }
+
+            }
+        });
+
+        viewHolder.propic.setOnClickListener(new View.OnClickListener() {
+            public void onClick (final View v) {
+                Intent i = new Intent(context, UserProfileActivity.class);
+                String propicUrl = ParseUser.getCurrentUser().getParseFile("profilepic").getUrl();
+                String username = ParseUser.getCurrentUser().getUsername();
+                i.putExtra("propicUrl", propicUrl);
+                i.putExtra("objectId", ParseUser.getCurrentUser().getObjectId());
+                i.putExtra("username", username);
+                context.startActivity(i);
+            }
+        });
     }
 
     @Override

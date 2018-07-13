@@ -33,6 +33,7 @@ dependencies {
     // VectorDrawableCompat
     implementation "com.android.support:animated-vector-drawable:${supportLibVersion}"
     implementation "com.android.support:transition:${supportLibVersion}"
+    implementation "android.arch.paging:runtime:1.0.0"
     implementation "com.android.support:support-annotations:${supportLibVersion}"
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     implementation 'com.parse.bolts:bolts-android:1.4.0'

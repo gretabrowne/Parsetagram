@@ -26,4 +26,12 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tvCaption0"
         android:text="TextView" />
+
+    <TextView
+        android:id="@+id/tvLikeCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvTimestamp"
+        android:text="TextView" />
 </RelativeLayout>

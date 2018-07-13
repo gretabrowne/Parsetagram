@@ -3,11 +3,13 @@ package codepath.com.parsetagram;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 @ParseClassName("Post")
 public class Post extends ParseObject {
 
+    private static final String KEY_USER = "user";
     public Post() {
         super();
     }
@@ -41,10 +43,40 @@ public class Post extends ParseObject {
         put("owner", user);
     }
 
-//    @Override
-//    public Date getCreatedAt() {
-//        return getDate("createdAt");
-//    }
+    public String getOwner() {
+        return getString("owner");
+    }
 
+    public ParseUser getUser() {
+        return getParseUser(KEY_USER);
+    }
+
+    public void setUser(ParseUser user) {
+        put(KEY_USER, user);
+    }
+
+    public void setNumLikes (int numLikes) {
+        put("numLikes", numLikes);
+    }
+
+    public int getNumLikes () {
+        return getInt("numLikes");
+    }
+
+    public static class Query extends ParseQuery<Post> {
+        public Query() {
+            super(Post.class);
+        }
+
+        public Query getTop() {
+            setLimit(20);
+            return this;
+        }
+
+        public Query withUser() {
+            include("user");
+            return this;
+        }
+    }
 
 }
