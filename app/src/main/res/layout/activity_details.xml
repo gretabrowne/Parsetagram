@@ -8,8 +8,9 @@
 
     <ImageView
         android:id="@+id/ivDetailPhoto"
-        android:layout_width="match_parent"
-        android:layout_height="400dp" />
+        android:layout_width="193dp"
+        android:layout_height="168dp"
+        android:layout_marginTop="20dp" />
 
     <TextView
         android:id="@+id/tvCaption0"
@@ -34,4 +35,45 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tvTimestamp"
         android:text="TextView" />
+
+
+    <Button
+        android:id="@+id/btnPostComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/etComment"
+        android:backgroundTint="@color/light_blue_500"
+        android:onClick="onAddItem"
+        android:text="Post"
+        android:textColor="@color/white" />
+
+    <EditText
+        android:id="@+id/etComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvLikeCount"
+        android:ems="10"
+        android:hint="Add a comment..."
+        android:inputType="textPersonName" />
+
+    <ListView
+        android:id="@+id/lvComments"
+        android:layout_width="150dp"
+        android:layout_height="140dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/ivDetailPhoto"
+        android:layout_marginEnd="26dp"
+        android:layout_marginTop="28dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/lvComments"
+        android:layout_alignTop="@+id/ivDetailPhoto"
+        android:text="Comments:" />
+
+
 </RelativeLayout>

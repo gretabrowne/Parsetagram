@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -38,6 +37,7 @@ public class FeedFragment extends Fragment {
         // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
         // view setups and attaching listeners
         rvPosts = view.findViewById(R.id.rvPosts);
+        rvPosts.setLayoutManager(new LinearLayoutManager(getActivity()));
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
 
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -62,7 +62,7 @@ public class FeedFragment extends Fragment {
         // Define the class we would like to query
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
 // Define our query conditions
-        query.whereEqualTo("owner", ParseUser.getCurrentUser());
+        // query.whereEqualTo("owner", ParseUser.getCurrentUser());
         query.setLimit(20);
         query.orderByDescending("createdAt");
 // Execute the find asynchronously
@@ -73,7 +73,7 @@ public class FeedFragment extends Fragment {
                     // String firstItemId = itemList.get(0).getObjectId();
                     adapter = new PostsAdapter(itemList);
                     rvPosts.setAdapter(adapter);
-                    rvPosts.setLayoutManager(new LinearLayoutManager(getActivity()));
+//                    rvPosts.setLayoutManager(new LinearLayoutManager(getActivity()));
                     // Toast.makeText(TimelineActivity.this, firstItemId, Toast.LENGTH_SHORT).show();
                 } else {
                     Log.d("item", "Error: " + e.getMessage());
@@ -86,7 +86,7 @@ public class FeedFragment extends Fragment {
         // Define the class we would like to query
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
 // Define our query conditions
-        query.whereEqualTo("owner", ParseUser.getCurrentUser());
+        // query.whereEqualTo("owner", ParseUser.getCurrentUser());
         query.setLimit(20);
         query.orderByDescending("createdAt");
 // Execute the find asynchronously

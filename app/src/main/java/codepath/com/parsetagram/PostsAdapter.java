@@ -14,7 +14,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
+
+import org.parceler.Parcels;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -36,6 +39,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
         public TextView dateCreated;
         public ImageButton likeButton;
         public ImageView propic;
+        public ImageButton commentButton;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -50,6 +54,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             dateCreated = (TextView) itemView.findViewById(R.id.tvDateCreated);
             likeButton = (ImageButton) itemView.findViewById(R.id.ibLike);
             propic = (ImageView) itemView.findViewById(R.id.ivProfile);
+            commentButton = (ImageButton) itemView.findViewById(R.id.ibComment);
 
             itemView.setOnClickListener(this);
         }
@@ -70,6 +75,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
                 String stringDate = df.format(post.getCreatedAt());
                 intent.putExtra("timestamp", stringDate);
                 intent.putExtra("numLikes", post.getNumLikes());
+                intent.putExtra("post", Parcels.wrap(post));
                 // show the activity
                 context.startActivity(intent);
             }
@@ -95,14 +101,22 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
         ImageView profilePic = viewHolder.propic;
 
         String imageUrl = post.getMedia().getUrl();
-        String profilePic2 = ParseUser.getCurrentUser().getParseFile("profilepic").getUrl();
+        ParseFile pfile = null;
+        try {
+            pfile = post.getUser().fetchIfNeeded().getParseFile("profilepic");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (pfile != null) {
+            String profilePic2 = pfile.getUrl();
+            if (profilePic2 != null) {
+                Glide.with(context).load(profilePic2).into(profilePic);
+            }
+        }
 
         Glide.with(context)
                 .load(imageUrl)
                 .into(imageView);
-        if (profilePic2 != null) {
-            Glide.with(context).load(profilePic2).into(profilePic);
-        }
 
 
         TextView timestamp = viewHolder.dateCreated;
@@ -113,6 +127,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
 
         TextView user = viewHolder.username;
         String username = null;
+        if (ParseUser.getCurrentUser() == null || post == null) {
+            Intent i = new Intent (context, LoginActivity.class);
+            context.startActivity(i);
+        }
         try {
             username = post.getUser().fetchIfNeeded().getUsername();
         } catch (ParseException e) {
@@ -124,7 +142,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
         String postCaption = post.getBody();
         Log.d("caption", postCaption);
         TextView caption = viewHolder.caption;
-        caption.setText(String.format("%s %s", username, postCaption));
+        caption.setText(String.format("%s:  %s", username, postCaption));
 
         viewHolder.likeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick (final View v) {
@@ -153,13 +171,34 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             }
         });
 
+
+
+        viewHolder.commentButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick (final View v) {
+                Intent i = new Intent (context, DetailsActivity.class);
+                i.putExtra("image_url", post.getMedia().getUrl());
+                i.putExtra("caption", post.getBody());
+                // todo-- set timestamp in home activity, then get it here?
+
+                DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+                String stringDate = df.format(post.getCreatedAt());
+                i.putExtra("timestamp", stringDate);
+                i.putExtra("numLikes", post.getNumLikes());
+                i.putExtra("addComment", true);
+                i.putExtra("username", ParseUser.getCurrentUser().getUsername());
+                i.putExtra("post", Parcels.wrap(post));
+                // show the activity
+                context.startActivity(i);
+            }
+        });
+
         viewHolder.propic.setOnClickListener(new View.OnClickListener() {
             public void onClick (final View v) {
                 Intent i = new Intent(context, UserProfileActivity.class);
-                String propicUrl = ParseUser.getCurrentUser().getParseFile("profilepic").getUrl();
-                String username = ParseUser.getCurrentUser().getUsername();
+                String propicUrl = post.getUser().getParseFile("profilepic").getUrl();
+                String username = post.getUser().getUsername();
                 i.putExtra("propicUrl", propicUrl);
-                i.putExtra("objectId", ParseUser.getCurrentUser().getObjectId());
+                i.putExtra("objectId", Parcels.wrap(post.getUser()));
                 i.putExtra("username", username);
                 context.startActivity(i);
             }

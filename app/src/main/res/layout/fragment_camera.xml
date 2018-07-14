@@ -19,9 +19,8 @@
         android:id="@+id/etCaption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/btnPost"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="114dp"
         android:ems="10"
         android:hint="Caption it!"
         android:inputType="textPersonName"
@@ -40,9 +39,8 @@
         android:id="@+id/btnPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/btnTakePhoto"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="80dp"
         android:text="Post"
         android:visibility="invisible" />
 
@@ -50,9 +48,9 @@
         android:id="@+id/btnTakePhoto"
         android:layout_width="60dp"
         android:layout_height="55dp"
-        android:layout_below="@+id/btnPost"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="-80dp"
+        android:layout_marginBottom="41dp"
         android:backgroundTint="@android:color/white"
         android:scaleType="fitXY"
         app:srcCompat="@drawable/instagram_new_post_outline_24" />

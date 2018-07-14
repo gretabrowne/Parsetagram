@@ -69,4 +69,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/menu_bottom_navigation" />
 
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="46dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="11dp"
+        app:srcCompat="@drawable/ufi_new_direct" />
+
 </RelativeLayout>

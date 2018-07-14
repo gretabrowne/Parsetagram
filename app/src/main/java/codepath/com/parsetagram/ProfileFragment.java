@@ -52,6 +52,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     Button proPic;
     ImageView profilePhoto;
     TextView tvUsernameProfile;
+//     ImageView ivDirectM;
 
     // Store the listener (activity) that will have events fired once the fragment is attached
     @Override
@@ -83,12 +84,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         proPic.setOnClickListener(this);
         profilePhoto = view.findViewById(R.id.ivProPic);
         tvUsernameProfile = view.findViewById(R.id.tvUsernameProfile);
+//         ivDirectM = view.findViewById(R.id.imageView3);
+//         ivDirectM.setVisibility(INVISIBLE);
 
         ParseUser u = ParseUser.getCurrentUser();
-        String pf = u.getParseFile("profilepic").getUrl();
+        ParseFile pf = u.getParseFile("profilepic");
         if (pf != null) {
             // if profile photo already set
-            Glide.with(view).load(pf).into(profilePhoto);
+            String pf2 = pf.getUrl();
+            Glide.with(view).load(pf2).into(profilePhoto);
         }
 
         String username = u.getUsername();
