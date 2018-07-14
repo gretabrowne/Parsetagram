@@ -1,8 +1,8 @@
-# Project 3 - *Name of App Here*
+# Project 3 - *Parstagram*
 
-**Name of your app** is a photo sharing app using Parse as its backend.
+**Parstagram** is a photo sharing app using Parse as its backend.
 
-Time spent: **X** hours spent in total
+Time spent: **28** hours spent in total
 
 ## User Stories
 
@@ -50,7 +50,8 @@ Here's a walkthrough of implemented user stories:
 <img src='https://i.imgur.com/PLNP2I8.gif' title='Logging in, logging out, and signing up' width='' alt='Video Walkthrough' />
 <img src='https://i.imgur.com/ITsejBI.gif' title='Posting, commenting, pull-to-refresh, and liking' width='' alt='Video Walkthrough' />
 <img src='https://i.imgur.com/fboqg4x.gif' title='Adding profile pic' width='' alt='Video Walkthrough' />
-
+<img src='https://i.imgur.com/lz0FGUO.gif' title='User profile and detail views' width='' alt='Video Walkthrough' />
+<img src='https://i.imgur.com/l5kEgV7.gif' title='Logging in persist; app home screen icon' width='' alt='Video Walkthrough' />
 
 
 
