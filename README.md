@@ -48,8 +48,9 @@ Please list two areas of the assignment you'd like to **discuss further with you
 Here's a walkthrough of implemented user stories:
 
 <img src='https://i.imgur.com/PLNP2I8.gif' title='Logging in, logging out, and signing up' width='' alt='Video Walkthrough' />
-<img src='https://i.imgur.com/ppBDXxm.gif' title='Posting, commenting, pull-to-refresh, and liking' width='' alt='Video Walkthrough' />
+<img src='https://i.imgur.com/ITsejBI.gif' title='Posting, commenting, pull-to-refresh, and liking' width='' alt='Video Walkthrough' />
 <img src='https://i.imgur.com/fboqg4x.gif' title='Adding profile pic' width='' alt='Video Walkthrough' />
+
 
 
 
